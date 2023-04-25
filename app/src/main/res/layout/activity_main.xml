@@ -18,54 +18,52 @@
         android:textColor="@android:color/white"
         android:backgroundTint="#FF0000"/>
 
-    <Button
-        android:id="@+id/carte_button"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/deconnexion_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="Carte"
-        android:textSize="18dp"/>
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
 
-    <Button
-        android:id="@+id/photo_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/carte_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="Photo"
-        android:textSize="18dp"/>
+        <Button
+            android:id="@+id/carte_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Carte"
+            android:textSize="18dp"
+            android:layout_gravity="center"/>
 
-    <Button
-        android:id="@+id/conseils_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/photo_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="Conseils"
-        android:textSize="18dp"/>
+        <Button
+            android:id="@+id/photo_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Photo"
+            android:textSize="18dp"
+            android:layout_gravity="center"/>
 
-    <Button
-        android:id="@+id/chat_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/conseils_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="Chat"
-        android:textSize="18dp"/>
+        <Button
+            android:id="@+id/conseils_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Conseils"
+            android:textSize="18dp"
+            android:layout_gravity="center"/>
 
-    <Button
-        android:id="@+id/profil_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/chat_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="Profil"
-        android:textSize="18dp"/>
+        <Button
+            android:id="@+id/chat_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chat"
+            android:textSize="18dp"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/profil_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profil"
+            android:textSize="18dp"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
 
 </RelativeLayout>
