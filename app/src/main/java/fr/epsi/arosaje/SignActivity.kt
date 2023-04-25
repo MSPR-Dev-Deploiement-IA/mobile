@@ -25,11 +25,12 @@ class SignActivity : AppCompatActivity() {
 
             // Vérifier que les champs sont remplis et que les mots de passe correspondent
             if (username.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty() && password == confirmPassword) {
-                // TODO: Enregistrer les informations de l'utilisateur (par exemple dans une base de données)
-
-                // Ouvrir l'activité de connexion (LoginActivity)
+                // Enregistrer les informations de l'utilisateur (dans la liste simulée en local)
                 val intent = Intent(this, LoginActivity::class.java)
+                intent.putExtra("username", username)
+                intent.putExtra("password", password)
                 startActivity(intent)
+                finish()
             } else {
                 // Afficher un message d'erreur
                 Toast.makeText(this, "Veuillez remplir tous les champs et vérifier que les mots de passe correspondent", Toast.LENGTH_SHORT).show()
