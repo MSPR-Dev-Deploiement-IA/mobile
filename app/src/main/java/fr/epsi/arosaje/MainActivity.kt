@@ -1,5 +1,6 @@
 package fr.epsi.arosaje
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -34,7 +35,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         profilButton.setOnClickListener {
-            // Action à effectuer lors du clic sur le bouton "Profil"
+            // Redirection vers l'activité ProfileActivity
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
         }
     }
 }
