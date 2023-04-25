@@ -43,6 +43,14 @@ class LoginActivity : AppCompatActivity() {
             if (userDatabase.containsKey(username) && userDatabase[username] == password) {
                 // Les informations d'identification sont valides, connectez l'utilisateur
                 Toast.makeText(this, "Connexion réussie", Toast.LENGTH_SHORT).show()
+
+                // Lancer l'activité SplashActivity
+                val intent = Intent(this@LoginActivity, SplashloginActivity::class.java)
+                startActivity(intent)
+
+                /*// Lancer l'activité principale
+                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                startActivity(intent)*/
             } else {
                 // Les informations d'identification sont invalides, afficher un message d'erreur
                 Toast.makeText(this, "Nom d'utilisateur ou mot de passe incorrect", Toast.LENGTH_SHORT).show()
