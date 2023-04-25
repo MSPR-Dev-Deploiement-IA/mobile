@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_background"
-    android:gravity="center">
+    android:background="@drawable/main_background">
+
+    <Button
+        android:id="@+id/deconnexion_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Déconnexion"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:backgroundTint="#FF0000"/>
 
     <Button
         android:id="@+id/carte_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/deconnexion_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
         android:text="Carte"
         android:textSize="18dp"/>
 
@@ -18,6 +32,9 @@
         android:id="@+id/photo_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/carte_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
         android:text="Photo"
         android:textSize="18dp"/>
 
@@ -25,6 +42,9 @@
         android:id="@+id/conseils_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/photo_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
         android:text="Conseils"
         android:textSize="18dp"/>
 
@@ -32,6 +52,9 @@
         android:id="@+id/chat_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/conseils_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
         android:text="Chat"
         android:textSize="18dp"/>
 
@@ -39,7 +62,10 @@
         android:id="@+id/profil_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/chat_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
         android:text="Profil"
         android:textSize="18dp"/>
 
-</LinearLayout>
+</RelativeLayout>
