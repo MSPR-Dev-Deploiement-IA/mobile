@@ -4,36 +4,42 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_background">
+    android:background="@drawable/main_background"
+    android:gravity="center">
 
     <Button
         android:id="@+id/carte_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Carte"/>
+        android:text="Carte"
+        android:textSize="18dp"/>
 
     <Button
         android:id="@+id/photo_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Photo"/>
+        android:text="Photo"
+        android:textSize="18dp"/>
 
     <Button
         android:id="@+id/conseils_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Conseils"/>
+        android:text="Conseils"
+        android:textSize="18dp"/>
 
     <Button
         android:id="@+id/chat_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Chat"/>
+        android:text="Chat"
+        android:textSize="18dp"/>
 
     <Button
         android:id="@+id/profil_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Profil"/>
+        android:text="Profil"
+        android:textSize="18dp"/>
 
 </LinearLayout>
