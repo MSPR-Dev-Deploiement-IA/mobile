@@ -27,8 +27,6 @@ class LoginActivity : AppCompatActivity() {
         val textViewNoAccount = findViewById<TextView>(R.id.textViewNoAccount)
 
         val intentKeys = IntentKeys
-        val username = intent.getStringExtra(intentKeys.EXTRA_USERNAME)
-        val password = intent.getStringExtra(intentKeys.EXTRA_PASSWORD)
 
         // Récupérer les informations de l'utilisateur ajouté dans la SignActivity
         val intent = intent
