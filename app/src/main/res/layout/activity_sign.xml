@@ -27,29 +27,28 @@
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white" />
 
+    <EditText
+        android:id="@+id/editTextConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:hint="Confirmer le mot de passe"
+        android:inputType="textPassword"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white" />
+
     <Button
         android:id="@+id/buttonSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextPassword"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:text="Valider"
         android:textColor="@android:color/white"
         android:backgroundTint="#FF0000" />
-
-    <TextView
-        android:id="@+id/textViewNoAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/buttonSubmit"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="32dp"
-        android:layout_marginStart="16dp"
-        android:text="Pas de compte ?"
-        android:textColor="@color/blue"
-        android:clickable="true"
-        android:onClick="goToSignActivity" />
 
 </RelativeLayout>
