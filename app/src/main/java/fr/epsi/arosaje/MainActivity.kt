@@ -55,7 +55,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         conseilsButton.setOnClickListener {
-            // TODO: Implémenter la fonctionnalité des conseils
+            val intent = Intent(this, TipsActivity::class.java)
+            startActivity(intent)
         }
 
         chatButton.setOnClickListener {
