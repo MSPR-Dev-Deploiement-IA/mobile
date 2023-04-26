@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
@@ -37,14 +36,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         photoButton.setOnClickListener {
-            // Vérifier si la permission pour utiliser la caméra est accordée
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
-                // Demander la permission pour utiliser la caméra
                 ActivityCompat.requestPermissions(this,
                     arrayOf(Manifest.permission.CAMERA), MY_PERMISSIONS_REQUEST_CAMERA)
             } else {
-                // Lancer l'application de la caméra
                 val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 if (takePictureIntent.resolveActivity(packageManager) != null) {
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
@@ -87,7 +83,6 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             MY_PERMISSIONS_REQUEST_CAMERA -> {
-                // Si la permission est accordée, lancer l'application de la caméra
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                     if (takePictureIntent.resolveActivity(packageManager) != null) {
