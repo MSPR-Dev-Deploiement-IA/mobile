@@ -1,5 +1,6 @@
 package fr.epsi.arosaje
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -30,7 +31,8 @@ class ProfileActivity : AppCompatActivity() {
 
         // Ajout des listeners pour chaque bouton
         photosButton.setOnClickListener {
-            // Action à effectuer lors du clic sur le bouton "Photos"
+            val intent = Intent(this, GalleryActivity::class.java)
+            startActivity(intent)
         }
 
         historiqueButton.setOnClickListener {
