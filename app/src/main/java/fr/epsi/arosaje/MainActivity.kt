@@ -31,8 +31,9 @@ class MainActivity : AppCompatActivity() {
         val chatButton: Button = findViewById(R.id.chat_button)
         val profilButton: Button = findViewById(R.id.profil_button)
 
-        carteButton.setOnClickListener {
-            // TODO: Implémenter la fonctionnalité de la carte
+        chatButton.setOnClickListener {
+            val intent = Intent(this, ChatActivity::class.java)
+            startActivity(intent)
         }
 
         photoButton.setOnClickListener {
@@ -46,6 +47,11 @@ class MainActivity : AppCompatActivity() {
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
                 }
             }
+        }
+
+        carteButton.setOnClickListener {
+            val intent = Intent(this, MapActivity::class.java)
+            startActivity(intent)
         }
 
         conseilsButton.setOnClickListener {
