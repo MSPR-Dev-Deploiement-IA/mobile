@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ChatAdapter(private val chatMessages: MutableList<String>) : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
+class ChatAdapter(private val chatItems: MutableList<ChatItem>) : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.chat_item, parent, false)
@@ -14,18 +14,22 @@ class ChatAdapter(private val chatMessages: MutableList<String>) : RecyclerView.
     }
 
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
-        holder.bind(chatMessages[position])
+        holder.bind(chatItems[position])
     }
 
     override fun getItemCount(): Int {
-        return chatMessages.size
+        return chatItems.size
     }
 
     class ChatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val pseudoTextView: TextView = itemView.findViewById(R.id.pseudo_text)
         private val messageTextView: TextView = itemView.findViewById(R.id.message_text)
 
-        fun bind(message: String) {
-            messageTextView.text = message
+        fun bind(chatItem: ChatItem) {
+            pseudoTextView.text = chatItem.pseudo
+            messageTextView.text = chatItem.message
         }
     }
 }
+
+data class ChatItem(val pseudo: String, val message: String)
