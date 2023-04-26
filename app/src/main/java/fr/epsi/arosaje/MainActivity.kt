@@ -1,14 +1,18 @@
 package fr.epsi.arosaje
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import java.io.FileOutputStream
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         val profilButton: Button = findViewById(R.id.profil_button)
 
         carteButton.setOnClickListener {
+            // TODO: Implémenter la fonctionnalité de la carte
         }
 
         photoButton.setOnClickListener {
@@ -48,9 +53,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         conseilsButton.setOnClickListener {
+            // TODO: Implémenter la fonctionnalité des conseils
         }
 
         chatButton.setOnClickListener {
+            // TODO: Implémenter la fonctionnalité du chat
         }
 
         profilButton.setOnClickListener {
@@ -59,7 +66,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Cette fonction est appelée lorsque l'utilisateur répond à la demande de permission
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            val filename = "photo.jpg"
+            val outputStream: FileOutputStream
+            try {
+                outputStream = openFileOutput(filename, Context.MODE_PRIVATE)
+                imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                outputStream.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
                                             grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
