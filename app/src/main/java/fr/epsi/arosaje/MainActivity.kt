@@ -53,7 +53,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         chatButton.setOnClickListener {
-            // TODO: Implémenter la fonctionnalité du chat
+            val intent = Intent(this, ChatActivity::class.java)
+            startActivity(intent)
         }
 
         profilButton.setOnClickListener {
