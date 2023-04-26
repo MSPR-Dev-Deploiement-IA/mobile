@@ -32,6 +32,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         historiqueButton.setOnClickListener {
+            //histo
         }
 
         favorisButton.setOnClickListener {
