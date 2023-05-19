@@ -62,7 +62,6 @@ class SignActivity : AppCompatActivity() {
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 runOnUiThread {
-                    println("1 + $email + $name + $password")
                     Toast.makeText(applicationContext, "Erreur lors de l'inscription", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -77,7 +76,6 @@ class SignActivity : AppCompatActivity() {
                     }
                 } else {
                     runOnUiThread {
-                        println("2 + $email + $name + $password")
                         Toast.makeText(applicationContext, "Erreur lors de l'inscription", Toast.LENGTH_SHORT).show()
                     }
                 }
