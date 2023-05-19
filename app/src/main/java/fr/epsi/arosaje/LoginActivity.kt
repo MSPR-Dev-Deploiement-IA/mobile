@@ -1,5 +1,6 @@
 package fr.epsi.arosaje
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -12,6 +13,7 @@ import java.io.IOException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.encodeToJsonElement
+import kotlinx.serialization.json.jsonPrimitive
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 
@@ -64,18 +66,38 @@ class LoginActivity : AppCompatActivity() {
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 runOnUiThread {
-                    println("1 + $email + $password")
                     Toast.makeText(applicationContext, "Erreur lors de la connexion", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
-                    runOnUiThread {
-                        Toast.makeText(applicationContext, "Connexion réussie", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(applicationContext, SplashloginActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                    val responseBody = response.body?.string()
+
+                    if(responseBody != null) {
+                        // Parse the response body
+                        val json = Json.parseToJsonElement(responseBody) as JsonObject
+
+                        // Get the token from the response
+                        val token = json["access_token"]?.jsonPrimitive?.content
+
+                        if (token != null) {
+                            // Store the token
+                            val sharedPref = getSharedPreferences("appPreferences", Context.MODE_PRIVATE)
+                            with (sharedPref.edit()) {
+                                putString("token", token)
+                                apply()
+                            }
+                        }
+
+                        runOnUiThread {
+                            Toast.makeText(applicationContext, "Connexion réussie", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(applicationContext, SplashloginActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                    } else {
+                        // Handle case where response body is null
                     }
                 } else {
                     runOnUiThread {
