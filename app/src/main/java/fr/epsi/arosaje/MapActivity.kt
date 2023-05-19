@@ -31,7 +31,6 @@ class MapActivity : AppCompatActivity() {
         // Add a click listener to the map
         val mapEventsReceiver: MapEventsReceiver = object : MapEventsReceiver {
             override fun singleTapConfirmedHelper(p: GeoPoint): Boolean {
-                // Create a marker at the clicked location
                 val marker = Marker(mapView)
                 marker.position = p
                 marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
