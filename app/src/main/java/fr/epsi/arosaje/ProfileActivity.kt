@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -39,7 +38,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         modifierProfilButton.setOnClickListener {
-            val intent = Intent(this, UpdateprofileActivity::class.java)
+            val intent = Intent(this, UpdateProfileActivity::class.java)
             startActivity(intent)
         }
     }

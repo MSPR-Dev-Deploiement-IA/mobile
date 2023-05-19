@@ -3,6 +3,7 @@ package fr.epsi.arosaje
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -79,15 +80,20 @@ class LoginActivity : AppCompatActivity() {
                         val json = Json.parseToJsonElement(responseBody) as JsonObject
 
                         // Get the token from the response
-                        val token = json["access_token"]?.jsonPrimitive?.content
+                        val accessToken = json["access_token"]?.jsonPrimitive?.content
+                        val refreshToken = json["refresh_token"]?.jsonPrimitive?.content
 
-                        if (token != null) {
+                        if (accessToken != null) {
                             // Store the token
                             val sharedPref = getSharedPreferences("appPreferences", Context.MODE_PRIVATE)
                             with (sharedPref.edit()) {
-                                putString("token", token)
+                                putString("accessToken", accessToken)
+                                putString("refreshToken", refreshToken)
                                 apply()
                             }
+                            // Log the token
+                            Log.d("LoginActivity", "Token: $accessToken")
+                            Log.d("LoginActivity", "Token: $accessToken")
                         }
 
                         runOnUiThread {

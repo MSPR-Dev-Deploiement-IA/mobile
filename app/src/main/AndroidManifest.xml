@@ -95,7 +95,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UpdateprofileActivity"
+            android:name=".UpdateProfileActivity"
             android:theme="@style/Theme.Arosaje"
             android:exported="true">
             <intent-filter>
