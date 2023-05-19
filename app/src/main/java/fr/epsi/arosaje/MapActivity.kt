@@ -2,7 +2,6 @@ package fr.epsi.arosaje
 
 import android.content.Context
 import android.os.Bundle
-import android.text.method.TextKeyListener.clear
 import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
@@ -17,12 +16,16 @@ import org.osmdroid.views.overlay.infowindow.InfoWindow
 import org.osmdroid.views.overlay.MapEventsOverlay
 
 class MapActivity : AppCompatActivity() {
+    private var isResetButtonClicked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
 
-        Configuration.getInstance().load(this, android.preference.PreferenceManager.getDefaultSharedPreferences(applicationContext))
+        Configuration.getInstance().load(
+            this,
+            android.preference.PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        )
 
         val mapView = MapView(this)
         mapView.setTileSource(TileSourceFactory.MAPNIK)
@@ -32,9 +35,47 @@ class MapActivity : AppCompatActivity() {
         mapView.controller.setCenter(startPoint)
         mapView.controller.setZoom(15.0)
 
+        val mapContainer = findViewById<FrameLayout>(R.id.map_container)
+        mapContainer.addView(mapView)
+
+        // Load stored markers
+        val sharedPref = getPreferences(Context.MODE_PRIVATE)
+        sharedPref.all.keys.forEach { lat ->
+            val lon = sharedPref.getString(lat, "")?.toDoubleOrNull()
+            if (lon != null) {
+                val marker = Marker(mapView)
+                marker.position = GeoPoint(lat.toDouble(), lon)
+                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                mapView.overlays.add(marker)
+            }
+        }
+
+        // Initialize the reset button and add a click listener
+        val resetButton = findViewById<Button>(R.id.reset_btn)
+        resetButton.setOnClickListener {
+            // Clear all markers from the map
+            mapView.overlays.clear()
+            mapView.invalidate()  // Redraw the map
+
+            // Clear all markers from shared preferences
+            with(sharedPref.edit()) {
+                clear()
+                apply()
+            }
+
+            // Set the flag to indicate that the reset button was clicked
+            isResetButtonClicked = true
+        }
+
         // Add a click listener to the map
         val mapEventsReceiver: MapEventsReceiver = object : MapEventsReceiver {
             override fun singleTapConfirmedHelper(p: GeoPoint): Boolean {
+                if (isResetButtonClicked) {
+                    // Ignore the click event if the reset button was clicked
+                    isResetButtonClicked = false
+                    return false
+                }
+
                 // Create a marker at the clicked location
                 val marker = Marker(mapView)
                 marker.position = p
@@ -86,20 +127,5 @@ class MapActivity : AppCompatActivity() {
 
         val overlayEvents = MapEventsOverlay(mapEventsReceiver)
         mapView.overlays.add(overlayEvents)
-
-        // Load stored markers
-        val sharedPref = getPreferences(Context.MODE_PRIVATE)
-        sharedPref.all.keys.forEach { lat ->
-            val lon = sharedPref.getString(lat, "")?.toDoubleOrNull()
-            if (lon != null) {
-                val marker = Marker(mapView)
-                marker.position = GeoPoint(lat.toDouble(), lon)
-                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                mapView.overlays.add(marker)
-            }
-        }
-
-        val mapContainer = findViewById<FrameLayout>(R.id.map_container)
-        mapContainer.addView(mapView)
     }
 }
