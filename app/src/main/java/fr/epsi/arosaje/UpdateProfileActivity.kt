@@ -84,14 +84,14 @@ class UpdateProfileActivity : AppCompatActivity() {
 
     private fun getStoredCookies(): List<Cookie> {
         val sharedPref = getSharedPreferences("appPreferences", Context.MODE_PRIVATE)
-        val access_token = sharedPref.getString("accessToken", null)
+        val accessToken = sharedPref.getString("accessToken", null)
 
-        return if (access_token != null) {
+        return if (accessToken != null) {
             val cookie = Cookie.Builder()
                 .domain("10.0.2.2")
                 .path("/api")
                 .name("access_token")
-                .value(access_token)
+                .value(accessToken)
                 .build()
             listOf(cookie)
         } else {
