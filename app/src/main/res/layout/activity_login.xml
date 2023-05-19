@@ -5,12 +5,12 @@
     android:background="@drawable/login_background">
 
     <EditText
-        android:id="@+id/editTextUsername"
+        android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_centerHorizontal="true"
-        android:hint="Nom d'utilisateur"
+        android:hint="Adresse mail"
         android:inputType="text"
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white" />
@@ -19,7 +19,7 @@
         android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextUsername"
+        android:layout_below="@id/editTextEmail"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:hint="Mot de passe"
