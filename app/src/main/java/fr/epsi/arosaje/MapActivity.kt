@@ -1,6 +1,7 @@
 package fr.epsi.arosaje
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -17,6 +18,9 @@ import org.osmdroid.views.overlay.MapEventsOverlay
 
 class MapActivity : AppCompatActivity() {
     private var isResetButtonClicked = false
+    private lateinit var mapView: MapView
+    private lateinit var overlayEvents: MapEventsOverlay
+    private lateinit var mapEventsReceiver: MapEventsReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +31,7 @@ class MapActivity : AppCompatActivity() {
             android.preference.PreferenceManager.getDefaultSharedPreferences(applicationContext)
         )
 
-        val mapView = MapView(this)
+        mapView = MapView(this)
         mapView.setTileSource(TileSourceFactory.MAPNIK)
 
         // Initialize map on Bordeaux
@@ -65,14 +69,26 @@ class MapActivity : AppCompatActivity() {
 
             // Set the flag to indicate that the reset button was clicked
             isResetButtonClicked = true
+
+            // Re-initialize the map events receiver
+            mapView.overlays.remove(overlayEvents)
+            overlayEvents = MapEventsOverlay(mapEventsReceiver)
+            mapView.overlays.add(overlayEvents)
+
+            // Reset the flag
+            isResetButtonClicked = false
+
+            // Redirect to MainActivity
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         // Add a click listener to the map
-        val mapEventsReceiver: MapEventsReceiver = object : MapEventsReceiver {
+        mapEventsReceiver = object : MapEventsReceiver {
             override fun singleTapConfirmedHelper(p: GeoPoint): Boolean {
                 if (isResetButtonClicked) {
                     // Ignore the click event if the reset button was clicked
-                    isResetButtonClicked = false
                     return false
                 }
 
@@ -96,7 +112,6 @@ class MapActivity : AppCompatActivity() {
                             // Remove the marker
                             mapView.overlays.remove(marker)
                             // And remove it from shared preferences
-                            val sharedPref = getPreferences(Context.MODE_PRIVATE)
                             with(sharedPref.edit()) {
                                 remove(marker.position.latitude.toString())
                                 apply()
@@ -111,7 +126,6 @@ class MapActivity : AppCompatActivity() {
                 mapView.overlays.add(marker)
 
                 // Store the marker location
-                val sharedPref = getPreferences(Context.MODE_PRIVATE)
                 with(sharedPref.edit()) {
                     putString(p.latitude.toString(), p.longitude.toString())
                     apply()
@@ -125,7 +139,7 @@ class MapActivity : AppCompatActivity() {
             }
         }
 
-        val overlayEvents = MapEventsOverlay(mapEventsReceiver)
+        overlayEvents = MapEventsOverlay(mapEventsReceiver)
         mapView.overlays.add(overlayEvents)
     }
 }
