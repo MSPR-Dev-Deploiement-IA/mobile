@@ -2,6 +2,7 @@ package fr.epsi.arosaje
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -9,20 +10,9 @@ import okhttp3.*
 import java.io.IOException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import okhttp3.OkHttpClient
-
-class MyCookieJar : CookieJar {
-    private var cookies: List<Cookie> = emptyList()
-
-    override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
-        this.cookies = cookies
-    }
-
-    override fun loadForRequest(url: HttpUrl): List<Cookie> {
-        return cookies
-    }
-}
 
 class UpdateProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +45,7 @@ class UpdateProfileActivity : AppCompatActivity() {
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 runOnUiThread {
+                    println("1")
                     Toast.makeText(this@UpdateProfileActivity, "Erreur lors de la récupération des informations de l'utilisateur", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -63,26 +54,37 @@ class UpdateProfileActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val responseBody = response.body?.string()
                     if (responseBody != null) {
+                        Log.d("UpdateProfileActivity", "Response body: $responseBody")
                         val json = Json.parseToJsonElement(responseBody) as JsonObject
-                        val name = json["name"]?.jsonPrimitive?.content
-                        val email = json["email"]?.jsonPrimitive?.content
-
+                        val user = json["user"]?.jsonObject
+                        val name = user?.get("name")?.jsonPrimitive?.content
+                        val email = user?.get("email")?.jsonPrimitive?.content
                         if (name != null && email != null) {
                             callback(name, email)
+                        } else {
+                            Log.d("UpdateProfileActivity", "Name or email was null: name=$name, email=$email")
                         }
+                    } else {
+                        Log.d("UpdateProfileActivity", "Response body was null.")
                     }
                 } else {
+                    val statusCode = response.code
+                    val responseBody = response.body?.string()
+                    Log.d("UpdateProfileActivity", "HTTP status code: $statusCode")
+                    Log.d("UpdateProfileActivity", "Response body: $responseBody")
+
                     runOnUiThread {
                         Toast.makeText(this@UpdateProfileActivity, "Impossible de récupérer les informations de l'utilisateur", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
+
         })
     }
 
     private fun getStoredCookies(): List<Cookie> {
         val sharedPref = getSharedPreferences("appPreferences", Context.MODE_PRIVATE)
-        val access_token = sharedPref.getString("access_token", null)
+        val access_token = sharedPref.getString("accessToken", null)
 
         return if (access_token != null) {
             val cookie = Cookie.Builder()
