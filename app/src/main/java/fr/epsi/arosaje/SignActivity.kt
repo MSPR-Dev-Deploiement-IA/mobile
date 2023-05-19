@@ -6,6 +6,13 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import okhttp3.*
+import java.io.IOException
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.encodeToJsonElement
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.MediaType.Companion.toMediaType
 
 class SignActivity : AppCompatActivity() {
 
@@ -13,28 +20,68 @@ class SignActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign)
 
-        val editTextUsername = findViewById<EditText>(R.id.editTextUsername)
+        val editTextMail = findViewById<EditText>(R.id.editTextEmail)
+        val editTextUsername = findViewById<EditText>(R.id.editTextName)
         val editTextPassword = findViewById<EditText>(R.id.editTextPassword)
         val editTextConfirmPassword = findViewById<EditText>(R.id.editTextConfirmPassword)
-
         val buttonSubmit = findViewById<Button>(R.id.buttonSubmit)
+
         buttonSubmit.setOnClickListener {
-            val username = editTextUsername.text.toString()
+            val email = editTextMail.text.toString()
+            val name = editTextUsername.text.toString()
             val password = editTextPassword.text.toString()
             val confirmPassword = editTextConfirmPassword.text.toString()
 
-            // Vérifier que les champs sont remplis et que les mots de passe correspondent
-            if (username.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty() && password == confirmPassword) {
-                // Enregistrer les informations de l'utilisateur (dans la liste simulée en local)
-                val intent = Intent(this, LoginActivity::class.java)
-                intent.putExtra("username", username)
-                intent.putExtra("password", password)
-                startActivity(intent)
-                finish()
+            if (email.isNotEmpty() && name.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty() && password == confirmPassword) {
+                register(email, name, password)
             } else {
-                // Afficher un message d'erreur
                 Toast.makeText(this, "Veuillez remplir tous les champs et vérifier que les mots de passe correspondent", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun register(email: String, name: String, password: String) {
+        val client = OkHttpClient()
+
+        val json = Json.encodeToJsonElement(
+            JsonObject(mapOf(
+                "email" to Json.encodeToJsonElement(email),
+                "name" to Json.encodeToJsonElement(name),
+                "password" to Json.encodeToJsonElement(password)
+            ))
+        ).toString()
+
+        val mediaType = "application/json; charset=utf-8".toMediaType()
+        val requestBody = json.toRequestBody(mediaType)
+
+        val request = Request.Builder()
+            .url("http://10.0.2.2:8080/auth/register")
+            .post(requestBody)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                runOnUiThread {
+                    println("1 + $email + $name + $password")
+                    Toast.makeText(applicationContext, "Erreur lors de l'inscription", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    runOnUiThread {
+                        Toast.makeText(applicationContext, "Inscription réussie", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(applicationContext, LoginActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                } else {
+                    runOnUiThread {
+                        println("2 + $email + $name + $password")
+                        Toast.makeText(applicationContext, "Erreur lors de l'inscription", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
     }
 }
