@@ -1,6 +1,10 @@
 package fr.epsi.arosaje
 
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Rect
+import android.graphics.Typeface
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 
@@ -9,7 +13,7 @@ class LabelledMarker(
     text: String,
     accuracy: Float = 0f,
     private val textColor: Int = Color.GREEN,
-    private val textSize: Float = 100f,
+    private val textSize: Float = 80f,
     private val textStyle: Int = Typeface.BOLD
 ) : Marker(map) {
     var text = ""
@@ -37,10 +41,12 @@ class LabelledMarker(
 
         val iconHeight = mIcon.bounds.height()  // Get the icon height
 
+        val textY = y + iconHeight.toFloat() + textHeight.toFloat() + 20f  // Adjust the additional offset as needed
+
         canvas?.drawText(
             text,
             x - textWidth / 2,
-            y - iconHeight - textHeight,  // Adjust the y-position of the text
+            textY,
             paint
         )
     }
