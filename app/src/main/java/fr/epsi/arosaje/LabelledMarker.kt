@@ -7,8 +7,9 @@ import android.graphics.Rect
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 
-class LabelledMarker(map: MapView?, text: String) : Marker(map) {
+class LabelledMarker(map: MapView?, text: String, accuracy: Float = 0f) : Marker(map) {
     var text = ""
+    var accuracy = accuracy
 
     init {
         this.text = text

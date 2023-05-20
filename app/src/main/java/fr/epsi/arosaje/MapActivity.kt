@@ -17,10 +17,10 @@ import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.infowindow.InfoWindow
 
 class MapActivity : AppCompatActivity() {
-    private var isResetButtonClicked = false
     private lateinit var mapView: MapView
     private lateinit var overlayEvents: MapEventsOverlay
     private lateinit var mapEventsReceiver: MapEventsReceiver
+    private val markers: MutableList<LabelledMarker> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,62 +42,21 @@ class MapActivity : AppCompatActivity() {
         val mapContainer = findViewById<FrameLayout>(R.id.map_container)
         mapContainer.addView(mapView)
 
-        // Load stored markers
-        val sharedPref = getPreferences(Context.MODE_PRIVATE)
-        sharedPref.all.keys.forEach { lat ->
-            val data = sharedPref.getString(lat, "")?.split(',')
-            if (data != null && data.size == 2) {
-                val lon = data[0].toDoubleOrNull()
-                val text = data[1]
-                if (lon != null) {
-                    val marker = LabelledMarker(mapView, text)
-                    marker.position = GeoPoint(lat.toDouble(), lon)
-                    marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                    mapView.overlays.add(marker)
-                }
-            }
-        }
-
-        // Initialize the reset button and add a click listener
-        val resetButton = findViewById<Button>(R.id.reset_btn)
-        resetButton.setOnClickListener {
-            // Clear all markers from the map
-            mapView.overlays.clear()
-            mapView.invalidate()  // Redraw the map
-
-            // Clear all markers from shared preferences
-            with(sharedPref.edit()) {
-                clear()
-                apply()
-            }
-
-            // Set the flag to indicate that the reset button was clicked
-            isResetButtonClicked = true
-
-            // Re-initialize the map events receiver
-            mapView.overlays.remove(overlayEvents)
-            overlayEvents = MapEventsOverlay(mapEventsReceiver)
-            mapView.overlays.add(overlayEvents)
-
-            // Reset the flag
-            isResetButtonClicked = false
-
-            // Relaunch MapActivity
-            val intent = Intent(this, MapActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
         // Add a click listener to the map
         mapEventsReceiver = object : MapEventsReceiver {
             override fun singleTapConfirmedHelper(p: GeoPoint): Boolean {
-                if (isResetButtonClicked) {
-                    // Ignore the click event if the reset button was clicked
-                    return false
+                // Check if the clicked location is within an existing marker
+                for (marker in markers) {
+                    val distance = p.distanceToAsDouble(marker.position)
+                    if (distance <= marker.accuracy) {
+                        // Handle marker click here
+                        // For example, show a dialog or start a new activity
+                        return true
+                    }
                 }
 
-                // Create a marker at the clicked location
-                val marker = LabelledMarker(mapView, "")
+                // Create a new marker at the clicked location with accuracy value
+                val marker = LabelledMarker(mapView, "", accuracy = 10f) // Set the accuracy value as desired
                 marker.position = p
                 marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
                 marker.infoWindow = object : InfoWindow(R.layout.bubble, mapView) {
@@ -106,36 +65,41 @@ class MapActivity : AppCompatActivity() {
                         val btn = mView.findViewById<Button>(R.id.bubble_btn)
                         val btnDelete = mView.findViewById<Button>(R.id.bubble_delete)
 
+                        et.setText(marker.text)
+
                         btn.setOnClickListener {
-                            // Store your text here
-                            val text = et.text.toString()
-                            marker.text = text
-                            mapView.invalidate()  // Force redraw to show new text
+                            val newText = et.text.toString()
+                            marker.text = newText
+                            mapView.invalidate()
                             close()
 
-                            // Store the marker location with the text
-                            with(sharedPref.edit()) {
-                                putString(p.latitude.toString(), "${p.longitude},$text")
+                            // Store the updated marker text to shared preferences
+                            with(getPreferences(Context.MODE_PRIVATE).edit()) {
+                                putString(marker.position.latitude.toString(), "${marker.position.longitude},${newText}")
                                 apply()
                             }
                         }
 
                         btnDelete.setOnClickListener {
-                            // Remove the marker
                             mapView.overlays.remove(marker)
-                            // And remove it from shared preferences
-                            with(sharedPref.edit()) {
+                            markers.remove(marker)
+                            mapView.invalidate()
+                            close()
+
+                            // Remove the marker from shared preferences
+                            with(getPreferences(Context.MODE_PRIVATE).edit()) {
                                 remove(marker.position.latitude.toString())
                                 apply()
                             }
-                            mapView.invalidate()  // Redraw the map
-                            close()
                         }
                     }
 
                     override fun onClose() {}
                 }
+
+                // Add the new marker to the map and the list of markers
                 mapView.overlays.add(marker)
+                markers.add(marker)
                 return true
             }
 
@@ -146,5 +110,107 @@ class MapActivity : AppCompatActivity() {
 
         overlayEvents = MapEventsOverlay(mapEventsReceiver)
         mapView.overlays.add(overlayEvents)
+
+        // Load stored markers
+        loadMarkersFromPreferences()
+
+        // Initialize the reset button and add a click listener
+        val resetButton = findViewById<Button>(R.id.reset_btn)
+        resetButton.setOnClickListener {
+            // Clear all markers from the map and the list of markers
+            mapView.overlays.removeAll(markers)
+            markers.clear()
+            mapView.invalidate()  // Redraw the map
+
+            // Clear all markers from shared preferences
+            with(getPreferences(Context.MODE_PRIVATE).edit()) {
+                clear()
+                apply()
+            }
+        }
+    }
+
+    private fun loadMarkersFromPreferences() {
+        val sharedPref = getPreferences(Context.MODE_PRIVATE)
+        sharedPref.all.keys.forEach { lat ->
+            val data = sharedPref.getString(lat, "")?.split(',')
+            if (data != null && data.size == 2) {
+                val lon = data[0].toDoubleOrNull()
+                val text = data[1]
+                if (lon != null) {
+                    val marker = LabelledMarker(mapView, text)
+                    marker.position = GeoPoint(lat.toDouble(), lon)
+                    marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                    marker.infoWindow = object : InfoWindow(R.layout.bubble, mapView) {
+                        override fun onOpen(item: Any?) {
+                            val et = mView.findViewById<EditText>(R.id.bubble_text)
+                            val btn = mView.findViewById<Button>(R.id.bubble_btn)
+                            val btnDelete = mView.findViewById<Button>(R.id.bubble_delete)
+
+                            et.setText(marker.text)
+
+                            btn.setOnClickListener {
+                                val newText = et.text.toString()
+                                marker.text = newText
+                                mapView.invalidate()
+                                close()
+
+                                // Store the updated marker text to shared preferences
+                                with(getPreferences(Context.MODE_PRIVATE).edit()) {
+                                    putString(lat, "${lon},${newText}")
+                                    apply()
+                                }
+                            }
+
+                            btnDelete.setOnClickListener {
+                                mapView.overlays.remove(marker)
+                                markers.remove(marker)
+                                mapView.invalidate()
+                                close()
+
+                                // Remove the marker from shared preferences
+                                with(getPreferences(Context.MODE_PRIVATE).edit()) {
+                                    remove(lat)
+                                    apply()
+                                }
+                            }
+                        }
+
+                        override fun onClose() {}
+                    }
+                    mapView.overlays.add(marker)
+                    markers.add(marker)
+                }
+            }
+        }
+        mapView.invalidate()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onBackPressed() {
+        saveMarkersToPreferences()
+        super.onBackPressed()
+    }
+
+    private fun saveMarkersToPreferences() {
+        with(getPreferences(Context.MODE_PRIVATE).edit()) {
+            clear()
+            markers.forEach { marker ->
+                putString(
+                    marker.position.latitude.toString(),
+                    "${marker.position.longitude},${marker.text}"
+                )
+            }
+            apply()
+        }
     }
 }
