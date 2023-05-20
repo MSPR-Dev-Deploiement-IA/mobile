@@ -31,5 +31,3 @@ class ChatAdapter(private val chatItems: MutableList<ChatItem>) : RecyclerView.A
         }
     }
 }
-
-data class ChatItem(val pseudo: String, val message: String)
