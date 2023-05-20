@@ -114,7 +114,6 @@ class MapActivity : AppCompatActivity() {
         // Load stored markers
         loadMarkersFromPreferences()
 
-        // Initialize the reset button and add a click listener
         val resetButton = findViewById<Button>(R.id.reset_btn)
         resetButton.setOnClickListener {
             // Clear all markers from the map and the list of markers
