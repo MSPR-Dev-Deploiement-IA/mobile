@@ -43,6 +43,12 @@ class LabelledMarker(
 
         val textY = y + iconHeight.toFloat() + textHeight.toFloat() + 20f  // Adjust the additional offset as needed
 
+        // Draw white background
+        val backgroundPaint = Paint()
+        backgroundPaint.color = Color.WHITE
+        canvas?.drawRect(x - textWidth / 2, textY - textHeight, x + textWidth / 2, textY, backgroundPaint)
+
+        // Draw text
         canvas?.drawText(
             text,
             x - textWidth / 2,
