@@ -3,7 +3,6 @@ package fr.epsi.arosaje
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.system.Os.close
 import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
@@ -46,12 +45,16 @@ class MapActivity : AppCompatActivity() {
         // Load stored markers
         val sharedPref = getPreferences(Context.MODE_PRIVATE)
         sharedPref.all.keys.forEach { lat ->
-            val lon = sharedPref.getString(lat, "")?.toDoubleOrNull()
-            if (lon != null) {
-                val marker = LabelledMarker(mapView, "")
-                marker.position = GeoPoint(lat.toDouble(), lon)
-                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                mapView.overlays.add(marker)
+            val data = sharedPref.getString(lat, "")?.split(',')
+            if (data != null && data.size == 2) {
+                val lon = data[0].toDoubleOrNull()
+                val text = data[1]
+                if (lon != null) {
+                    val marker = LabelledMarker(mapView, text)
+                    marker.position = GeoPoint(lat.toDouble(), lon)
+                    marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                    mapView.overlays.add(marker)
+                }
             }
         }
 
@@ -109,6 +112,12 @@ class MapActivity : AppCompatActivity() {
                             marker.text = text
                             mapView.invalidate()  // Force redraw to show new text
                             close()
+
+                            // Store the marker location with the text
+                            with(sharedPref.edit()) {
+                                putString(p.latitude.toString(), "${p.longitude},$text")
+                                apply()
+                            }
                         }
 
                         btnDelete.setOnClickListener {
@@ -127,13 +136,6 @@ class MapActivity : AppCompatActivity() {
                     override fun onClose() {}
                 }
                 mapView.overlays.add(marker)
-
-                // Store the marker location
-                with(sharedPref.edit()) {
-                    putString(p.latitude.toString(), p.longitude.toString())
-                    apply()
-                }
-                mapView.invalidate()  // Redraw the map
                 return true
             }
 
