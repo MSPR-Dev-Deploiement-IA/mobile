@@ -3,6 +3,7 @@ package fr.epsi.arosaje
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.system.Os.close
 import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
@@ -12,9 +13,9 @@ import org.osmdroid.events.MapEventsReceiver
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.infowindow.InfoWindow
-import org.osmdroid.views.overlay.MapEventsOverlay
 
 class MapActivity : AppCompatActivity() {
     private var isResetButtonClicked = false
@@ -47,7 +48,7 @@ class MapActivity : AppCompatActivity() {
         sharedPref.all.keys.forEach { lat ->
             val lon = sharedPref.getString(lat, "")?.toDoubleOrNull()
             if (lon != null) {
-                val marker = Marker(mapView)
+                val marker = LabelledMarker(mapView, "")
                 marker.position = GeoPoint(lat.toDouble(), lon)
                 marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
                 mapView.overlays.add(marker)
@@ -93,7 +94,7 @@ class MapActivity : AppCompatActivity() {
                 }
 
                 // Create a marker at the clicked location
-                val marker = Marker(mapView)
+                val marker = LabelledMarker(mapView, "")
                 marker.position = p
                 marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
                 marker.infoWindow = object : InfoWindow(R.layout.bubble, mapView) {
@@ -105,6 +106,8 @@ class MapActivity : AppCompatActivity() {
                         btn.setOnClickListener {
                             // Store your text here
                             val text = et.text.toString()
+                            marker.text = text
+                            mapView.invalidate()  // Force redraw to show new text
                             close()
                         }
 
