@@ -78,8 +78,8 @@ class MapActivity : AppCompatActivity() {
             // Reset the flag
             isResetButtonClicked = false
 
-            // Redirect to MainActivity
-            val intent = Intent(this, MainActivity::class.java)
+            // Relaunch MapActivity
+            val intent = Intent(this, MapActivity::class.java)
             startActivity(intent)
             finish()
         }
