@@ -68,7 +68,7 @@ class MapActivity : AppCompatActivity() {
                         et.setText(marker.text)
 
                         btn.setOnClickListener {
-                            val newText = et.text.toString()
+                            val newText = et.text.toString().take(16)
                             marker.text = newText
                             mapView.invalidate()
                             close()

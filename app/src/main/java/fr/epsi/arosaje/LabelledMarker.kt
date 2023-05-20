@@ -14,7 +14,8 @@ class LabelledMarker(
     accuracy: Float = 0f,
     private val textColor: Int = Color.GREEN,
     private val textSize: Float = 80f,
-    private val textStyle: Int = Typeface.BOLD
+    private val textStyle: Int = Typeface.BOLD,
+    private val backgroundPadding: Float = 10f
 ) : Marker(map) {
     var text = ""
     var accuracy = accuracy
@@ -41,17 +42,27 @@ class LabelledMarker(
 
         val iconHeight = mIcon.bounds.height()  // Get the icon height
 
+        val backgroundWidth = textWidth + backgroundPadding * 2
+        val backgroundHeight = textHeight + backgroundPadding * 2
+
+        val textX = x - textWidth / 2
         val textY = y + iconHeight.toFloat() + textHeight.toFloat() + 20f  // Adjust the additional offset as needed
 
         // Draw white background
         val backgroundPaint = Paint()
         backgroundPaint.color = Color.WHITE
-        canvas?.drawRect(x - textWidth / 2, textY - textHeight, x + textWidth / 2, textY, backgroundPaint)
+        canvas?.drawRect(
+            x - backgroundWidth / 2,
+            textY - backgroundHeight,
+            x + backgroundWidth / 2,
+            textY,
+            backgroundPaint
+        )
 
         // Draw text
         canvas?.drawText(
             text,
-            x - textWidth / 2,
+            textX,
             textY,
             paint
         )
