@@ -120,6 +120,94 @@ class ApiService(private val context: Context) {
         })
     }
 
+    fun getAllMessages(callback: (messages: List<ChatItem>?) -> Unit) {
+        val request = Request.Builder()
+            .url("http://10.0.2.2:8080/api/messages/")
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                mainHandler.post {
+                    callback(null)
+                    Toast.makeText(context, "Erreur lors de la récupération des messages", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body?.string()
+                    if (responseBody != null) {
+                        val jsonObject = Json.parseToJsonElement(responseBody) as JsonObject
+                        val jsonArray = jsonObject["messages"]?.jsonArray
+                        if (jsonArray != null) {
+                            val messages = jsonArray.mapNotNull { jsonElement ->
+                                val messageObject = jsonElement.jsonObject
+                                val id = messageObject["id"]?.jsonPrimitive?.int
+                                val senderId = messageObject["sender_id"]?.jsonPrimitive?.int
+                                val messageText = messageObject["message_text"]?.jsonPrimitive?.content
+                                val timestamp = messageObject["timestamp"]?.jsonPrimitive?.content
+                                if (id != null && senderId != null && messageText != null && timestamp != null) {
+                                    ChatItem(id, senderId, messageText, timestamp)
+                                } else {
+                                    null
+                                }
+                            }
+                            mainHandler.post {
+                                callback(messages)
+                            }
+                        } else {
+                            mainHandler.post {
+                                callback(null)
+                            }
+                        }
+                    } else {
+                        mainHandler.post {
+                            callback(null)
+                        }
+                    }
+                } else {
+                    mainHandler.post {
+                        callback(null)
+                        Toast.makeText(context, "Impossible de récupérer les messages", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
+    }
+
+
+    fun postMessage(message: String, callback: (success: Boolean) -> Unit) {
+        val json = Json.encodeToJsonElement(
+            JsonObject(mapOf("message_text" to Json.encodeToJsonElement(message)))
+        ).toString()
+
+        val mediaType = "application/json; charset=utf-8".toMediaType()
+        val requestBody = json.toRequestBody(mediaType)
+
+        val request = Request.Builder()
+            .url("http://10.0.2.2:8080/api/messages/add")
+            .post(requestBody)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                mainHandler.post {
+                    callback(false)
+                    Toast.makeText(context, "Erreur lors de l'envoi du message", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                mainHandler.post {
+                    callback(response.isSuccessful)
+                    if (!response.isSuccessful) {
+                        Toast.makeText(context, "Impossible d'envoyer le message", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
+    }
+
     private fun storeTokens(accessToken: String, refreshToken: String?) {
         with(sharedPref.edit()) {
             putString("accessToken", accessToken)
