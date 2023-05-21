@@ -13,6 +13,7 @@ class ChatActivity : AppCompatActivity() {
 
     private val chatItems = mutableListOf<ChatItem>()
     private lateinit var sharedPreferences: SharedPreferences
+    //working on new ChatActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
