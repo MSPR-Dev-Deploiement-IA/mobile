@@ -22,7 +22,7 @@
             android:layout_weight="0.5"
             android:hint="Adresse mail"
             android:inputType="text"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textColorHint="@android:color/white" />
 
         <EditText
@@ -33,7 +33,7 @@
             android:layout_marginTop="16dp"
             android:hint="Mot de passe"
             android:inputType="textPassword"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textColorHint="@android:color/white" />
 
         <Button
@@ -52,7 +52,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="Pas de compte ?"
-            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textColor="@color/blue"
             android:clickable="true"
             android:onClick="goToSignActivity" />
 
