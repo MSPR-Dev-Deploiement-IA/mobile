@@ -31,7 +31,7 @@ class ChatAdapter(private var chatItems: List<ChatItem>) :
         private val messageTextView: TextView = view.findViewById(R.id.messageTextView)
 
         fun bind(chatItem: ChatItem) {
-            senderTextView.text = chatItem.userId.toString()
+            senderTextView.text = chatItem.userName
             messageTextView.text = chatItem.messageText
         }
     }
