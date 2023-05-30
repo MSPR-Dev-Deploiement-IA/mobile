@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">A\'rosa\'je</string>
+    <string name="map_icon">Icône de la carte</string>
+    <string name="photo_icon">Icône de la photo</string>
+    <string name="tips_icon">Icône des conseils</string>
+    <string name="chat_icon">Icône du chat</string>
+    <string name="profile_icon">Icône du profil</string>
 </resources>
