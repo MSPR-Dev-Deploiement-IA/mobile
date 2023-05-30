@@ -142,12 +142,12 @@ class ApiService(private val context: Context) {
                         if (jsonArray != null) {
                             val messages = jsonArray.mapNotNull { jsonElement ->
                                 val messageObject = jsonElement.jsonObject
-                                val id = messageObject["id"]?.jsonPrimitive?.int
-                                val senderId = messageObject["sender_id"]?.jsonPrimitive?.int
+                                val id = messageObject["ID"]?.jsonPrimitive?.int
+                                val userName = messageObject["user"]?.jsonObject?.get("name")?.jsonPrimitive?.content
                                 val messageText = messageObject["message_text"]?.jsonPrimitive?.content
                                 val timestamp = messageObject["timestamp"]?.jsonPrimitive?.content
-                                if (id != null && senderId != null && messageText != null && timestamp != null) {
-                                    ChatItem(id, senderId, messageText, timestamp)
+                                if (id != null && userName != null && messageText != null && timestamp != null) {
+                                    ChatItem(id, userName, messageText, timestamp)
                                 } else {
                                     null
                                 }
