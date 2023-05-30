@@ -17,7 +17,7 @@
         android:text="Déconnexion"
         android:textSize="18sp"
         android:textColor="@android:color/white"
-        android:backgroundTint="#FF0000"/>
+        android:backgroundTint="#FF0000" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,25 +30,34 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp">
 
+            <ImageView
+                android:id="@+id/icon_map"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:src="@drawable/ic_map"
+                android:contentDescription="@string/map_icon" />
+
             <Button
                 android:id="@+id/carte_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Carte"
                 android:textSize="14sp"
-                android:layout_marginLeft="48dp" />
-
-            <ImageView
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/ic_map"
-                android:contentDescription="@string/map_icon" />
+                android:layout_toRightOf="@id/icon_map"
+                android:layout_alignTop="@id/icon_map" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp">
+
+            <ImageView
+                android:id="@+id/icon_camera"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:src="@drawable/ic_camera"
+                android:contentDescription="@string/photo_icon" />
 
             <Button
                 android:id="@+id/photo_button"
@@ -56,19 +65,21 @@
                 android:layout_height="wrap_content"
                 android:text="Photo"
                 android:textSize="14sp"
-                android:layout_marginLeft="48dp" />
-
-            <ImageView
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/ic_camera"
-                android:contentDescription="@string/photo_icon" />
+                android:layout_toRightOf="@id/icon_camera"
+                android:layout_alignTop="@id/icon_camera" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp">
+
+            <ImageView
+                android:id="@+id/icon_tips"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:src="@drawable/ic_tips"
+                android:contentDescription="@string/tips_icon" />
 
             <Button
                 android:id="@+id/conseils_button"
@@ -76,19 +87,21 @@
                 android:layout_height="wrap_content"
                 android:text="Conseils"
                 android:textSize="14sp"
-                android:layout_marginLeft="48dp" />
-
-            <ImageView
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/ic_tips"
-                android:contentDescription="@string/tips_icon" />
+                android:layout_toRightOf="@id/icon_tips"
+                android:layout_alignTop="@id/icon_tips" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp">
+
+            <ImageView
+                android:id="@+id/icon_chat"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:src="@drawable/ic_chat"
+                android:contentDescription="@string/chat_icon" />
 
             <Button
                 android:id="@+id/chat_button"
@@ -96,13 +109,8 @@
                 android:layout_height="wrap_content"
                 android:text="Chat"
                 android:textSize="14sp"
-                android:layout_marginLeft="48dp" />
-
-            <ImageView
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/ic_chat"
-                android:contentDescription="@string/chat_icon" />
+                android:layout_toRightOf="@id/icon_chat"
+                android:layout_alignTop="@id/icon_chat" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -110,19 +118,21 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp">
 
+            <ImageView
+                android:id="@+id/icon_profile"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:src="@drawable/ic_profile"
+                android:contentDescription="@string/profile_icon" />
+
             <Button
                 android:id="@+id/profil_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Profil"
                 android:textSize="14sp"
-                android:layout_marginLeft="48dp" />
-
-            <ImageView
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/ic_profile"
-                android:contentDescription="@string/profile_icon" />
+                android:layout_toRightOf="@id/icon_profile"
+                android:layout_alignTop="@id/icon_profile" />
         </RelativeLayout>
 
     </LinearLayout>
