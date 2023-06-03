@@ -16,9 +16,13 @@ import java.io.FileOutputStream
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var apiService: ApiService
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        apiService = ApiService(this)
 
         val deconnexionButton: ImageView = findViewById(R.id.deconnexion_button)
         deconnexionButton.setOnClickListener {
@@ -99,11 +103,15 @@ class MainActivity : AppCompatActivity() {
                 outputStream = openFileOutput(filename, Context.MODE_PRIVATE)
                 imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
                 outputStream.close()
+
+                // Appeler la méthode sur l'instance de ApiService
+                apiService.uploadPhotoToApi(filename)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
     }
+
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
                                             grantResults: IntArray) {

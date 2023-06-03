@@ -8,7 +8,9 @@ import android.widget.Toast
 import kotlinx.serialization.json.*
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 import java.io.IOException
 
 class ApiService(private val context: Context) {
@@ -230,5 +232,39 @@ class ApiService(private val context: Context) {
         } else {
             emptyList()
         }
+    }
+
+    // Méthode pour envoyer la photo à l'API
+    fun uploadPhotoToApi(filename: String) {
+        val file = File(context.filesDir, filename)
+
+        val requestBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("photo", file.name, file.asRequestBody("image/jpeg".toMediaType()))
+            .build()
+
+        val request = Request.Builder()
+            .url("http://10.0.2.2:8080/backend/api/photos/")
+            .header("Content-Type", "multipart/form-data")
+            .post(requestBody)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                mainHandler.post {
+                    Toast.makeText(context, "Erreur lors de l'envoi de la photo", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                mainHandler.post {
+                    if (response.isSuccessful) {
+                        Toast.makeText(context, "La photo a été envoyée avec succès", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "Erreur lors de l'envoi de la photo", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
     }
 }
