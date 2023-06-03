@@ -13,210 +13,219 @@
         android:background="@drawable/layout_border"
         android:padding="16dp">
 
-    <!-- Icones Centrés par 3 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_centerInParent="true">
-
-        <!-- Premier Groupe d'Icônes -->
+        <!-- Icones Centrés par 3 -->
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_marginEnd="16dp">
+            android:orientation="horizontal"
+            android:layout_centerInParent="true">
 
-            <ImageView
-                android:id="@+id/icon_map"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/ic_map"
-                android:contentDescription="Carte"
-                android:background="@drawable/icon_background"
-                android:padding="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- Premier Groupe d'Icônes -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Carte"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp" />
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginEnd="8dp">
 
-            <ImageView
-                android:id="@+id/icon_camera"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/ic_camera"
-                android:contentDescription="Photo"
-                android:background="@drawable/icon_background"
-                android:padding="8dp"
-                android:layout_marginTop="16dp" />
+                <ImageView
+                    android:id="@+id/icon_map"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@drawable/ic_map"
+                    android:contentDescription="Carte"
+                    android:background="@drawable/icon_background"
+                    android:padding="4dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Carte"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="8dp" />
+
+                <ImageView
+                    android:id="@+id/icon_camera"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@drawable/ic_camera"
+                    android:contentDescription="Photo"
+                    android:background="@drawable/icon_background"
+                    android:padding="4dp"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Photo"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:layout_marginTop="8dp" />
+
+                <ImageView
+                    android:id="@+id/icon_tips"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@drawable/ic_tips"
+                    android:contentDescription="Conseils"
+                    android:background="@drawable/icon_background"
+                    android:padding="4dp"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Conseils"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
+
+            <!-- Deuxième Groupe d'Icônes -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Photo"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp" />
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp">
 
-            <ImageView
-                android:id="@+id/icon_tips"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/ic_tips"
-                android:contentDescription="Conseils"
-                android:background="@drawable/icon_background"
-                android:padding="8dp"
-                android:layout_marginTop="16dp" />
+                <ImageView
+                    android:id="@+id/icon_chat"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@drawable/ic_chat"
+                    android:contentDescription="Chat"
+                    android:background="@drawable/icon_background"
+                    android:padding="4dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chat"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="8dp" />
+
+                <ImageView
+                    android:id="@+id/icon_profile"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@drawable/ic_profile"
+                    android:contentDescription="Profil"
+                    android:background="@drawable/icon_background"
+                    android:padding="4dp"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profil"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="8dp" />
+
+                <ImageView
+                    android:id="@+id/icon_gallery"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@drawable/ic_gallery"
+                    android:contentDescription="Galerie"
+                    android:background="@drawable/icon_background"
+                    android:padding="4dp"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Galerie"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
+
+            <!-- Troisième Groupe d'Icônes -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Conseils"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp" />
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginStart="8dp">
+
+                <!-- Icone de l'Histoire -->
+                <ImageView
+                    android:id="@+id/icon_history"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@drawable/ic_history"
+                    android:contentDescription="Historique"
+                    android:background="@drawable/icon_background"
+                    android:padding="4dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Histoire"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="8dp" />
+
+                <!-- Icone de Favoris -->
+                <ImageView
+                    android:id="@+id/icon_favorite"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@drawable/ic_favorite"
+                    android:contentDescription="Favoris"
+                    android:background="@drawable/icon_background"
+                    android:padding="4dp"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Favoris"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="8dp" />
+
+                <!-- Icone de Déconnexion -->
+                <ImageView
+                    android:id="@+id/deconnexion_button"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@drawable/ic_deconnexion"
+                    android:contentDescription="Déconnexion"
+                    android:background="@drawable/icon_background"
+                    android:padding="4dp"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Déconnexion"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
 
         </LinearLayout>
-
-        <!-- Deuxième Groupe d'Icônes -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp">
-
-            <ImageView
-                android:id="@+id/icon_chat"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/ic_chat"
-                android:contentDescription="Chat"
-                android:background="@drawable/icon_background"
-                android:padding="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chat"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp" />
-
-            <ImageView
-                android:id="@+id/icon_profile"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/ic_profile"
-                android:contentDescription="Profil"
-                android:background="@drawable/icon_background"
-                android:padding="8dp"
-                android:layout_marginTop="16dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Profil"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp" />
-
-            <ImageView
-                android:id="@+id/icon_gallery"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/ic_gallery"
-                android:contentDescription="Galerie"
-                android:background="@drawable/icon_background"
-                android:padding="8dp"
-                android:layout_marginTop="16dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Galerie"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp" />
-
-        </LinearLayout>
-
-        <!-- Troisième Groupe d'Icônes -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_marginStart="16dp">
-
-            <!-- Icone de l'Histoire -->
-            <ImageView
-                android:id="@+id/icon_history"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/ic_history"
-                android:contentDescription="Histoire"
-                android:background="@drawable/icon_background"
-                android:padding="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Histoire"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp" />
-
-            <!-- Icone de Favoris -->
-            <ImageView
-                android:id="@+id/icon_favorite"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/ic_favorite"
-                android:contentDescription="Favoris"
-                android:background="@drawable/icon_background"
-                android:padding="8dp"
-                android:layout_marginTop="16dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Favoris"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp" />
-
-            <!-- Icone de Déconnexion -->
-            <ImageView
-                android:id="@+id/deconnexion_button"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/ic_deconnexion"
-                android:contentDescription="Déconnexion"
-                android:background="@drawable/icon_background"
-                android:padding="8dp"
-                android:layout_marginTop="16dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Déconnexion"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
 
     </LinearLayout>
 
