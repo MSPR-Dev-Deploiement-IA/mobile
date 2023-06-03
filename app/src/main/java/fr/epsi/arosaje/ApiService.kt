@@ -4,12 +4,16 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Handler
 import android.os.Looper
+import android.widget.ImageView
 import android.widget.Toast
+import com.squareup.picasso.Picasso
 import kotlinx.serialization.json.*
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONException
+import org.json.JSONObject
 import java.io.File
 import java.io.IOException
 
@@ -25,6 +29,7 @@ class ApiService(private val context: Context) {
         context.getSharedPreferences("appPreferences", Context.MODE_PRIVATE)
 
     private val mainHandler = Handler(Looper.getMainLooper())
+    private lateinit var imageView: ImageView
 
     fun login(email: String, password: String, callback: (success: Boolean) -> Unit) {
         val json = Json.encodeToJsonElement(
@@ -267,4 +272,52 @@ class ApiService(private val context: Context) {
             }
         })
     }
+
+    fun getPhotosFromApi(imageView: ImageView) {
+        val request = Request.Builder()
+            .url("http://10.0.2.2:8080/backend/api/photos/")
+            .get()
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                mainHandler.post {
+                    Toast.makeText(context, "Erreur lors de la récupération des photos", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                mainHandler.post {
+                    if (response.isSuccessful) {
+                        val responseData = response.body?.string()
+                        // Analyse la réponse JSON contenant les liens vers les photos
+                        val photoUrls = parsePhotoUrls(responseData)
+                        // Utilise Picasso pour charger et afficher les images
+                        for (url in photoUrls) {
+                            Picasso.get().load(url).into(imageView)
+                        }
+                    } else {
+                        Toast.makeText(context, "Erreur lors de la récupération des photos", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
+    }
+
+    private fun parsePhotoUrls(responseData: String?): List<String> {
+        val urls = mutableListOf<String>()
+        try {
+            val json = JSONObject(responseData)
+            val photosArray = json.getJSONArray("photos")
+            for (i in 0 until photosArray.length()) {
+                val photoObject = photosArray.getJSONObject(i)
+                val url = photoObject.getString("photo_file_url")
+                urls.add(url)
+            }
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        return urls
+    }
+
 }
