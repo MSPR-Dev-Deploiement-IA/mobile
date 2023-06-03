@@ -240,7 +240,7 @@ class ApiService(private val context: Context) {
 
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
-            .addFormDataPart("photo", file.name, file.asRequestBody("image/jpeg".toMediaType()))
+            .addFormDataPart("files", file.name, file.asRequestBody("image/jpeg".toMediaType())) //prvsioulsy was photo
             .build()
 
         val request = Request.Builder()
