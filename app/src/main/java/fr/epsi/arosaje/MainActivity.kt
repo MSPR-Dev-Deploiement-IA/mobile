@@ -72,8 +72,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         galleryButton.setOnClickListener {
-            val intent = Intent(this, GalleryActivity::class.java)
-            startActivity(intent)
+            /*val intent = Intent(this, GalleryActivity::class.java)
+            startActivity(intent)*/
+            Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show()
         }
 
         val historyButton: ImageView = findViewById(R.id.icon_history)
