@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,29 +5,21 @@
     android:padding="16dp"
     android:background="@drawable/main_background">
 
-    <ImageView
-        android:id="@+id/deconnexion_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/ic_deconnexion"
-        android:contentDescription="Déconnexion"
-        android:background="@drawable/button_background"
-        android:padding="8dp" />
-
+    <!-- Icones Centrés par 3 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_centerInParent="true">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <!-- Premier Groupe d'Icônes -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginEnd="16dp">
 
             <ImageView
                 android:id="@+id/icon_map"
@@ -43,15 +34,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Carte"
-                android:textSize="14sp"
-                android:layout_toRightOf="@id/icon_map"
-                android:layout_centerVertical="true" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
 
             <ImageView
                 android:id="@+id/icon_camera"
@@ -60,21 +45,16 @@
                 android:src="@drawable/ic_camera"
                 android:contentDescription="Photo"
                 android:background="@drawable/icon_background"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:layout_marginTop="16dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Photo"
-                android:textSize="14sp"
-                android:layout_toRightOf="@id/icon_camera"
-                android:layout_centerVertical="true" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
 
             <ImageView
                 android:id="@+id/icon_tips"
@@ -83,21 +63,28 @@
                 android:src="@drawable/ic_tips"
                 android:contentDescription="Conseils"
                 android:background="@drawable/icon_background"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:layout_marginTop="16dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Conseils"
-                android:textSize="14sp"
-                android:layout_toRightOf="@id/icon_tips"
-                android:layout_centerVertical="true" />
-        </RelativeLayout>
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        </LinearLayout>
+
+        <!-- Deuxième Groupe d'Icônes -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
 
             <ImageView
                 android:id="@+id/icon_chat"
@@ -112,15 +99,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Chat"
-                android:textSize="14sp"
-                android:layout_toRightOf="@id/icon_chat"
-                android:layout_centerVertical="true" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
 
             <ImageView
                 android:id="@+id/icon_profile"
@@ -129,21 +110,16 @@
                 android:src="@drawable/ic_profile"
                 android:contentDescription="Profil"
                 android:background="@drawable/icon_background"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:layout_marginTop="16dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Profil"
-                android:textSize="14sp"
-                android:layout_toRightOf="@id/icon_profile"
-                android:layout_centerVertical="true" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
 
             <ImageView
                 android:id="@+id/icon_gallery"
@@ -152,16 +128,54 @@
                 android:src="@drawable/ic_gallery"
                 android:contentDescription="Galerie"
                 android:background="@drawable/icon_background"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:layout_marginTop="16dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Galerie"
-                android:textSize="14sp"
-                android:layout_toRightOf="@id/icon_gallery"
-                android:layout_centerVertical="true" />
-        </RelativeLayout>
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+
+        <!-- Troisième Groupe d'Icônes -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginStart="16dp">
+            <!-- Icone de Déconnexion -->
+            <ImageView
+                android:id="@+id/deconnexion_button"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:src="@drawable/ic_deconnexion"
+                android:contentDescription="Déconnexion"
+                android:background="@drawable/icon_background"
+                android:padding="8dp"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Déconnexion"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
+
+            <!-- Cet espace vide permet d'ajuster le layout pour les 3 colonnes -->
+            <View
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size" />
+
+            <!-- Vous pouvez ajouter un autre groupe d'icônes ici si nécessaire -->
+
+        </LinearLayout>
 
     </LinearLayout>
 
