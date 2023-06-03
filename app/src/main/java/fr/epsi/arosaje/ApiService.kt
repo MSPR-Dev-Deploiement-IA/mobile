@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Handler
 import android.os.Looper
-import android.widget.ImageView
 import android.widget.Toast
 import com.squareup.picasso.Picasso
 import kotlinx.serialization.json.*
@@ -29,7 +28,6 @@ class ApiService(private val context: Context) {
         context.getSharedPreferences("appPreferences", Context.MODE_PRIVATE)
 
     private val mainHandler = Handler(Looper.getMainLooper())
-    private lateinit var imageView: ImageView
 
     fun login(email: String, password: String, callback: (success: Boolean) -> Unit) {
         val json = Json.encodeToJsonElement(
@@ -273,11 +271,13 @@ class ApiService(private val context: Context) {
         })
     }
 
-    fun getPhotosFromApi(imageView: ImageView) {
+    fun getPhotosFromApi() : List<String> {
         val request = Request.Builder()
             .url("http://10.0.2.2:8080/backend/api/photos/")
             .get()
             .build()
+
+        var photos = mutableListOf<String>()
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -289,18 +289,20 @@ class ApiService(private val context: Context) {
             override fun onResponse(call: Call, response: Response) {
                 mainHandler.post {
                     if (response.isSuccessful) {
-                        val responseData = response.body?.string()
+                        val responseData = response.body?.toString()
+                        // {photos: [...]}
                         // Analyse la réponse JSON contenant les liens vers les photos
                         val photoUrls = parsePhotoUrls(responseData)
                         // Utilise Picasso pour charger et afficher les images
-                        for (url in photoUrls) {
-                            Picasso.get().load("http://10.0.2.2:8080/backend/static/$url").into(imageView)                        }
+                        photos = photoUrls.toMutableList()
                     } else {
                         Toast.makeText(context, "Erreur lors de la récupération des photos", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         })
+
+        return photos
     }
 
     private fun parsePhotoUrls(responseData: String?): List<String> {
@@ -318,5 +320,4 @@ class ApiService(private val context: Context) {
         }
         return urls
     }
-
 }
