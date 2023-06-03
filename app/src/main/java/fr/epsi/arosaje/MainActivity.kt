@@ -7,7 +7,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
-import android.widget.Button
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -19,19 +19,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val deconnexionButton: Button = findViewById(R.id.deconnexion_button)
+        val deconnexionButton: ImageView = findViewById(R.id.deconnexion_button)
         deconnexionButton.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
-        // comment before big css change
 
-        val carteButton: Button = findViewById(R.id.carte_button)
-        val photoButton: Button = findViewById(R.id.photo_button)
-        val conseilsButton: Button = findViewById(R.id.conseils_button)
-        val chatButton: Button = findViewById(R.id.chat_button)
-        val profilButton: Button = findViewById(R.id.profil_button)
-        val galleryButton: Button = findViewById(R.id.gallery_button)
+        val carteButton: ImageView = findViewById(R.id.icon_map)
+        val photoButton: ImageView = findViewById(R.id.icon_camera)
+        val conseilsButton: ImageView = findViewById(R.id.icon_tips)
+        val chatButton: ImageView = findViewById(R.id.icon_chat)
+        val profilButton: ImageView = findViewById(R.id.icon_profile)
+        val galleryButton: ImageView = findViewById(R.id.icon_gallery)
+
 
         chatButton.setOnClickListener {
             val intent = Intent(this, ChatActivity::class.java)
