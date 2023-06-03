@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
+import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.serialization.json.*
 import okhttp3.*
@@ -271,13 +272,11 @@ class ApiService(private val context: Context) {
         })
     }
 
-    fun getPhotosFromApi() : List<String> {
+    fun getPhotos(callback: (photos: List<String>?) -> Unit) {
         val request = Request.Builder()
             .url("http://10.0.2.2:8080/backend/api/photos/")
             .get()
             .build()
-
-        var photos = mutableListOf<String>()
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -287,23 +286,23 @@ class ApiService(private val context: Context) {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                mainHandler.post {
-                    if (response.isSuccessful) {
-                        val responseData = response.body?.toString()
-                        // {photos: [...]}
-                        // Analyse la réponse JSON contenant les liens vers les photos
-                        val photoUrls = parsePhotoUrls(responseData)
-                        // Utilise Picasso pour charger et afficher les images
-                        photos = photoUrls.toMutableList()
-                    } else {
+                if (response.isSuccessful) {
+                    val responseBody = response.body?.string()  // This is the network operation
+                    mainHandler.post {
+                        val gson = Gson()
+                        val photoResponse = gson.fromJson(responseBody, PhotoResponse::class.java)
+                        callback(photoResponse.photos.map { it.url })
+                    }
+                } else {
+                    mainHandler.post {
                         Toast.makeText(context, "Erreur lors de la récupération des photos", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
-        })
 
-        return photos
+        })
     }
+
 
     private fun parsePhotoUrls(responseData: String?): List<String> {
         val urls = mutableListOf<String>()

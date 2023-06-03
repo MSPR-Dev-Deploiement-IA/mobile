@@ -65,6 +65,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        galleryButton.setOnClickListener {
+            val intent = Intent(this, GalleryActivity::class.java)
+            startActivity(intent)
+        }
+
         chatButton.setOnClickListener {
             val intent = Intent(this, ChatActivity::class.java)
             startActivity(intent)
