@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         val conseilsButton: Button = findViewById(R.id.conseils_button)
         val chatButton: Button = findViewById(R.id.chat_button)
         val profilButton: Button = findViewById(R.id.profil_button)
+        val galleryButton: Button = findViewById(R.id.gallery_button)
 
         chatButton.setOnClickListener {
             val intent = Intent(this, ChatActivity::class.java)
@@ -65,7 +66,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         profilButton.setOnClickListener {
-            val intent = Intent(this, ProfileActivity::class.java)
+            val intent = Intent(this, UpdateProfileActivity::class.java)
+            startActivity(intent)
+        }
+
+        galleryButton.setOnClickListener {
+            val intent = Intent(this, GalleryActivity::class.java)
             startActivity(intent)
         }
     }

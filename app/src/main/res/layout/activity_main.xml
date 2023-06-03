@@ -135,6 +135,28 @@
                 android:layout_alignTop="@id/icon_profile" />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <ImageView
+                android:id="@+id/icon_gallery"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:src="@drawable/ic_gallery"
+                android:contentDescription="@string/gallery_icon" />
+
+            <Button
+                android:id="@+id/gallery_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Galerie"
+                android:textSize="14sp"
+                android:layout_toRightOf="@id/icon_gallery"
+                android:layout_alignTop="@id/icon_gallery" />
+        </RelativeLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

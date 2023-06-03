@@ -10,7 +10,6 @@ import android.widget.GridView
 import android.widget.ImageView
 import android.widget.ListAdapter
 import androidx.appcompat.app.AppCompatActivity
-import java.io.FileInputStream
 
 class GalleryActivity : AppCompatActivity() {
 

@@ -5,4 +5,5 @@
     <string name="tips_icon">Icône des conseils</string>
     <string name="chat_icon">Icône du chat</string>
     <string name="profile_icon">Icône du profil</string>
+    <string name="gallery_icon">Icône de la gallerie</string>
 </resources>
