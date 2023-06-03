@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
+        // comment before big css change
 
         val carteButton: Button = findViewById(R.id.carte_button)
         val photoButton: Button = findViewById(R.id.photo_button)
