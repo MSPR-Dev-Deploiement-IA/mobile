@@ -294,8 +294,7 @@ class ApiService(private val context: Context) {
                         val photoUrls = parsePhotoUrls(responseData)
                         // Utilise Picasso pour charger et afficher les images
                         for (url in photoUrls) {
-                            Picasso.get().load(url).into(imageView)
-                        }
+                            Picasso.get().load("http://10.0.2.2:8080/backend/static/$url").into(imageView)                        }
                     } else {
                         Toast.makeText(context, "Erreur lors de la récupération des photos", Toast.LENGTH_SHORT).show()
                     }

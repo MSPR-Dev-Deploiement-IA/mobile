@@ -15,6 +15,7 @@ class GalleryActivity : AppCompatActivity() {
 
     private lateinit var apiService: ApiService
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gallery)
@@ -23,11 +24,13 @@ class GalleryActivity : AppCompatActivity() {
         val imageView = findViewById<ImageView>(R.id.imageView)
 
         val images = arrayOf("photo.jpg")
+        apiService = ApiService(this)
 
         val adapter = ImageAdapter(this, images)
         gridView.adapter = adapter
 
         apiService.getPhotosFromApi(imageView)
+
     }
 }
 
