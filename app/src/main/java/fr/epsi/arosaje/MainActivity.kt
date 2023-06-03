@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         profilButton.setOnClickListener {
-            val intent = Intent(this, UpdateProfileActivity::class.java)
+            val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
 
