@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -74,6 +75,17 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, GalleryActivity::class.java)
             startActivity(intent)
         }
+
+        val historyButton: ImageView = findViewById(R.id.icon_history)
+        historyButton.setOnClickListener {
+            Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show()
+        }
+
+        val favoriteButton: ImageView = findViewById(R.id.icon_favorite)
+        favoriteButton.setOnClickListener {
+            Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

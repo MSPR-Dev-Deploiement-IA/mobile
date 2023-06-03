@@ -157,6 +157,44 @@
             android:orientation="vertical"
             android:gravity="center"
             android:layout_marginStart="16dp">
+
+            <!-- Icone de l'Histoire -->
+            <ImageView
+                android:id="@+id/icon_history"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:src="@drawable/ic_history"
+                android:contentDescription="Histoire"
+                android:background="@drawable/icon_background"
+                android:padding="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Histoire"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
+
+            <!-- Icone de Favoris -->
+            <ImageView
+                android:id="@+id/icon_favorite"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:src="@drawable/ic_favorite"
+                android:contentDescription="Favoris"
+                android:background="@drawable/icon_background"
+                android:padding="8dp"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Favoris"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
+
             <!-- Icone de Déconnexion -->
             <ImageView
                 android:id="@+id/deconnexion_button"
@@ -175,13 +213,6 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginTop="8dp" />
-
-            <!-- Cet espace vide permet d'ajuster le layout pour les 3 colonnes -->
-            <View
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size" />
-
-            <!-- Vous pouvez ajouter un autre groupe d'icônes ici si nécessaire -->
 
         </LinearLayout>
 
