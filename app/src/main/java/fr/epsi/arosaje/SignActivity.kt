@@ -55,7 +55,7 @@ class SignActivity : AppCompatActivity() {
         val requestBody = json.toRequestBody(mediaType)
 
         val request = Request.Builder()
-            .url("http://10.0.2.2:8080/auth/register")
+            .url("http://10.0.2.2:8080/backend/auth/register")
             .post(requestBody)
             .build()
 

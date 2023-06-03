@@ -36,7 +36,7 @@ class ApiService(private val context: Context) {
         val requestBody = json.toRequestBody(mediaType)
 
         val request = Request.Builder()
-            .url("http://10.0.2.2:8080/auth/login")
+            .url("http://10.0.2.2:8080/backend/auth/login")
             .post(requestBody)
             .build()
 
@@ -83,7 +83,7 @@ class ApiService(private val context: Context) {
 
     fun getUserInfo(callback: (name: String?, email: String?) -> Unit) {
         val request = Request.Builder()
-            .url("http://10.0.2.2:8080/api/users/me")
+            .url("http://10.0.2.2:8080/backend/api/users/me")
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -122,7 +122,7 @@ class ApiService(private val context: Context) {
 
     fun getAllMessages(callback: (messages: List<ChatItem>?) -> Unit) {
         val request = Request.Builder()
-            .url("http://10.0.2.2:8080/api/messages/")
+            .url("http://10.0.2.2:8080/backend/api/messages/")
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -185,7 +185,7 @@ class ApiService(private val context: Context) {
         val requestBody = json.toRequestBody(mediaType)
 
         val request = Request.Builder()
-            .url("http://10.0.2.2:8080/api/messages/add")
+            .url("http://10.0.2.2:8080/backend/api/messages/add")
             .post(requestBody)
             .build()
 
@@ -222,7 +222,7 @@ class ApiService(private val context: Context) {
         return if (accessToken != null) {
             val cookie = Cookie.Builder()
                 .domain("10.0.2.2")
-                .path("/api")
+                .path("/api") // didn't update that with /backend cause it seems to work well
                 .name("access_token")
                 .value(accessToken)
                 .build()
