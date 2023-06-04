@@ -6,6 +6,10 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import com.google.gson.Gson
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.squareup.picasso.Picasso
 import kotlinx.serialization.json.*
 import okhttp3.*
@@ -272,7 +276,7 @@ class ApiService(private val context: Context) {
         })
     }
 
-    fun getPhotos(callback: (photos: List<String>?) -> Unit) {
+    /*fun getPhotos(callback: (photos: List<String>?) -> Unit) {
         val request = Request.Builder()
             .url("http://10.0.2.2:8080/backend/api/photos/")
             .get()
@@ -301,7 +305,37 @@ class ApiService(private val context: Context) {
             }
 
         })
+    }*/
+
+    fun getPhotos(callback: (List<Photo>?) -> Unit) {
+        val request = Request.Builder()
+            .url("http://10.0.2.2:8080/backend/api/photos/")
+            .header("Content-Type", "application/json")
+            .get()
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                // Gestion des erreurs
+                callback(null)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val body = response.body?.string()
+
+                // Nous avons besoin d'un JsonAdapter pour convertir notre réponse JSON en une classe Kotlin.
+                val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+
+                val adapter: JsonAdapter<PhotoResponse> = moshi.adapter(PhotoResponse::class.java)
+                val photoResponse = adapter.fromJson(body)
+                val photos = photoResponse?.photos
+
+                // Ici, nous avons notre liste de photos. Nous les renvoyons via le callback.
+                callback(photos)
+            }
+        })
     }
+
 
 
     private fun parsePhotoUrls(responseData: String?): List<String> {

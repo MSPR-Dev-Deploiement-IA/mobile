@@ -1,5 +1,3 @@
-package fr.epsi.arosaje
-
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +5,10 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
+import fr.epsi.arosaje.Photo
+import fr.epsi.arosaje.R
 
-class PhotoAdapter(private val context: Context, private val dataSource: List<String>) : BaseAdapter() {
+class PhotoAdapter(private val context: Context, private val dataSource: List<Photo>) : BaseAdapter() {
 
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
@@ -30,28 +30,19 @@ class PhotoAdapter(private val context: Context, private val dataSource: List<St
 
         if (convertView == null) {
             view = inflater.inflate(R.layout.item_photo, parent, false)
-
             holder = ViewHolder()
             holder.thumbnailImageView = view.findViewById(R.id.photo_imageview) as ImageView
-
             view.tag = holder
         } else {
             view = convertView
             holder = convertView.tag as ViewHolder
         }
 
-        val photoUrl = getItem(position) as String?
-        if (photoUrl != null) {
-            Picasso.get().load(photoUrl).into(holder.thumbnailImageView)
-        } else {
-            // handle null photoUrl here, you can set a default image or make the ImageView invisible
-            // for example:
-            holder.thumbnailImageView.setImageResource(R.drawable.gallery_one) // replace default_image with your actual default image resource
-        }
+        val photo = getItem(position) as Photo
+        Picasso.get().load("http://10.0.2.2:8080/backend/static/" + photo.photo_file_url).into(holder.thumbnailImageView)
 
         return view
     }
-
 
     private class ViewHolder {
         lateinit var thumbnailImageView: ImageView

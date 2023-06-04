@@ -1,5 +1,6 @@
 package fr.epsi.arosaje
 
+import PhotoAdapter
 import android.os.Bundle
 import android.widget.GridView
 import androidx.appcompat.app.AppCompatActivity
@@ -16,10 +17,12 @@ class GalleryActivity : AppCompatActivity() {
         apiService = ApiService(this)
 
         apiService.getPhotos { photos ->
-            if (photos != null) {
-                gridView.adapter = PhotoAdapter(this, photos)
-            } else {
-                // Handle error
+            runOnUiThread {
+                if (photos != null) {
+                    gridView.adapter = PhotoAdapter(this, photos)
+                } else {
+                    // Handle error
+                }
             }
         }
     }
