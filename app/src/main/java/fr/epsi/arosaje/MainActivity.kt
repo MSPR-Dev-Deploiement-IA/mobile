@@ -82,12 +82,12 @@ class MainActivity : AppCompatActivity() {
 
         val historyButton: ImageView = findViewById(R.id.icon_history)
         historyButton.setOnClickListener {
-            Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Bientôt disponible", Toast.LENGTH_SHORT).show()
         }
 
         val favoriteButton: ImageView = findViewById(R.id.icon_favorite)
         favoriteButton.setOnClickListener {
-            Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Bientôt disponible", Toast.LENGTH_SHORT).show()
         }
 
     }
