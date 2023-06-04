@@ -276,37 +276,6 @@ class ApiService(private val context: Context) {
         })
     }
 
-    /*fun getPhotos(callback: (photos: List<String>?) -> Unit) {
-        val request = Request.Builder()
-            .url("http://10.0.2.2:8080/backend/api/photos/")
-            .get()
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                mainHandler.post {
-                    Toast.makeText(context, "Erreur lors de la récupération des photos", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                if (response.isSuccessful) {
-                    val responseBody = response.body?.string()  // This is the network operation
-                    mainHandler.post {
-                        val gson = Gson()
-                        val photoResponse = gson.fromJson(responseBody, PhotoResponse::class.java)
-                        callback(photoResponse.photos.map { it.url })
-                    }
-                } else {
-                    mainHandler.post {
-                        Toast.makeText(context, "Erreur lors de la récupération des photos", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-
-        })
-    }*/
-
     fun getPhotos(callback: (List<Photo>?) -> Unit) {
         val request = Request.Builder()
             .url("http://10.0.2.2:8080/backend/api/photos/")
@@ -334,23 +303,5 @@ class ApiService(private val context: Context) {
                 callback(photos)
             }
         })
-    }
-
-
-
-    private fun parsePhotoUrls(responseData: String?): List<String> {
-        val urls = mutableListOf<String>()
-        try {
-            val json = JSONObject(responseData)
-            val photosArray = json.getJSONArray("photos")
-            for (i in 0 until photosArray.length()) {
-                val photoObject = photosArray.getJSONObject(i)
-                val url = photoObject.getString("photo_file_url")
-                urls.add(url)
-            }
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-        return urls
     }
 }
