@@ -16,6 +16,9 @@ import okhttp3.MediaType.Companion.toMediaType
 
 class SignActivity : AppCompatActivity() {
 
+    private val prodUrl = "https://mspr-arosaje.francecentral.cloudapp.azure.com"
+    private val localUrl = "http://10.0.2.2:8080"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign)
@@ -55,7 +58,7 @@ class SignActivity : AppCompatActivity() {
         val requestBody = json.toRequestBody(mediaType)
 
         val request = Request.Builder()
-            .url("http://10.0.2.2:8080/backend/auth/register")
+            .url("$prodUrl/backend/auth/register") // "http://10.0.2.2:8080/backend/auth/register"
             .post(requestBody)
             .build()
 
