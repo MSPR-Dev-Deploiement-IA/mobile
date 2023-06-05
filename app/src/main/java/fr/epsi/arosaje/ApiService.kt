@@ -22,6 +22,8 @@ import java.io.File
 import java.io.IOException
 
 class ApiService(private val context: Context) {
+    private val prodUrl = "https://mspr-arosaje.francecentral.cloudapp.azure.com"
+    private val localUrl = "http://10.0.2.2:8080"
     private val client: OkHttpClient = OkHttpClient.Builder()
         .cookieJar(object : CookieJar {
             override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {}
@@ -46,7 +48,7 @@ class ApiService(private val context: Context) {
         val requestBody = json.toRequestBody(mediaType)
 
         val request = Request.Builder()
-            .url("http://10.0.2.2:8080/backend/auth/login")
+            .url("$prodUrl/backend/auth/login") // http://10.0.2.2:8080/backend/auth/login
             .post(requestBody)
             .build()
 
@@ -93,7 +95,7 @@ class ApiService(private val context: Context) {
 
     fun getUserInfo(callback: (name: String?, email: String?) -> Unit) {
         val request = Request.Builder()
-            .url("http://10.0.2.2:8080/backend/api/users/me")
+            .url("$prodUrl/backend/api/users/me") // "http://10.0.2.2:8080/backend/api/users/me"
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -132,7 +134,7 @@ class ApiService(private val context: Context) {
 
     fun getAllMessages(callback: (messages: List<ChatItem>?) -> Unit) {
         val request = Request.Builder()
-            .url("http://10.0.2.2:8080/backend/api/messages/")
+            .url("$prodUrl/backend/api/messages/") // "http://10.0.2.2:8080/backend/api/messages/"
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -195,7 +197,7 @@ class ApiService(private val context: Context) {
         val requestBody = json.toRequestBody(mediaType)
 
         val request = Request.Builder()
-            .url("http://10.0.2.2:8080/backend/api/messages/add")
+            .url("$prodUrl/backend/api/messages/add") // "http://10.0.2.2:8080/backend/api/messages/add"
             .post(requestBody)
             .build()
 
@@ -252,7 +254,7 @@ class ApiService(private val context: Context) {
             .build()
 
         val request = Request.Builder()
-            .url("http://10.0.2.2:8080/backend/api/photos/")
+            .url("$prodUrl/backend/api/photos/") // "http://10.0.2.2:8080/backend/api/photos/"
             .header("Content-Type", "multipart/form-data")
             .post(requestBody)
             .build()
@@ -278,7 +280,7 @@ class ApiService(private val context: Context) {
 
     fun getPhotos(callback: (List<Photo>?) -> Unit) {
         val request = Request.Builder()
-            .url("http://10.0.2.2:8080/backend/api/photos/")
+            .url("$prodUrl/backend/api/photos/") // "http://10.0.2.2:8080/backend/api/photos/"
             .header("Content-Type", "application/json")
             .get()
             .build()

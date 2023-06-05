@@ -9,7 +9,8 @@ import fr.epsi.arosaje.Photo
 import fr.epsi.arosaje.R
 
 class PhotoAdapter(private val context: Context, private val dataSource: List<Photo>) : BaseAdapter() {
-
+    private val prodUrl = "https://mspr-arosaje.francecentral.cloudapp.azure.com"
+    private val localUrl = "http://10.0.2.2:8080"
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getCount(): Int {
@@ -39,7 +40,7 @@ class PhotoAdapter(private val context: Context, private val dataSource: List<Ph
         }
 
         val photo = getItem(position) as Photo
-        Picasso.get().load("http://10.0.2.2:8080/backend/static/" + photo.photo_file_url).into(holder.thumbnailImageView)
+        Picasso.get().load("$prodUrl/backend/static/" + photo.photo_file_url).into(holder.thumbnailImageView) // "http://10.0.2.2:8080/backend/static/"
 
         return view
     }
